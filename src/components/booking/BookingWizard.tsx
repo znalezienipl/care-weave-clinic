@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate, useServerFn } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Check, ChevronLeft, ChevronRight, Clock, Loader2, MapPin } from "lucide-react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
