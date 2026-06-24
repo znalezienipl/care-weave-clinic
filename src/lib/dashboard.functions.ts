@@ -2,6 +2,17 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+export const getWaitlist = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data } = await supabaseAdmin
+      .from("waitlist")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(50);
+    return data ?? [];
+  });
+
 // Get the doctor record for the currently logged-in user
 export const getMyDoctor = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

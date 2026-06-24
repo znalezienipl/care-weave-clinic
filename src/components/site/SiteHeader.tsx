@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { LayoutDashboard, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -67,6 +67,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm" className="hidden h-9 gap-1.5 rounded-full px-3 text-muted-foreground lg:inline-flex">
+            <Link to="/dashboard">
+              <LayoutDashboard className="h-4 w-4" />
+              Panel
+            </Link>
+          </Button>
           <Button asChild size="lg" className="hidden h-11 rounded-full px-6 lg:inline-flex">
             <Link to="/umow-wizyte">Umów wizytę</Link>
           </Button>
@@ -94,6 +100,12 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/dashboard"
+              className="flex items-center gap-2 rounded-xl px-4 py-3 text-base font-medium text-foreground hover:bg-surface-soft"
+            >
+              <LayoutDashboard className="h-4 w-4" /> Panel lekarki
+            </Link>
             <Button asChild size="lg" className="mt-2 h-12 rounded-full">
               <Link to="/umow-wizyte">Umów wizytę</Link>
             </Button>
