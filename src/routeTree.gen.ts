@@ -14,6 +14,7 @@ import { Route as UslugiRouteImport } from './routes/uslugi'
 import { Route as UmowWizyteRouteImport } from './routes/umow-wizyte'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CennikRouteImport } from './routes/cennik'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -42,6 +43,11 @@ const KontaktRoute = KontaktRouteImport.update({
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CennikRoute = CennikRouteImport.update({
   id: '/cennik',
   path: '/cennik',
@@ -56,6 +62,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
+  '/dashboard': typeof DashboardRoute
   '/kontakt': typeof KontaktRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
+  '/dashboard': typeof DashboardRoute
   '/kontakt': typeof KontaktRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
+  '/dashboard': typeof DashboardRoute
   '/kontakt': typeof KontaktRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cennik'
+    | '/dashboard'
     | '/kontakt'
     | '/sitemap.xml'
     | '/umow-wizyte'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cennik'
+    | '/dashboard'
     | '/kontakt'
     | '/sitemap.xml'
     | '/umow-wizyte'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/cennik'
+    | '/dashboard'
     | '/kontakt'
     | '/sitemap.xml'
     | '/umow-wizyte'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CennikRoute: typeof CennikRoute
+  DashboardRoute: typeof DashboardRoute
   KontaktRoute: typeof KontaktRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UmowWizyteRoute: typeof UmowWizyteRoute
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontaktRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cennik': {
       id: '/cennik'
       path: '/cennik'
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CennikRoute: CennikRoute,
+  DashboardRoute: DashboardRoute,
   KontaktRoute: KontaktRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UmowWizyteRoute: UmowWizyteRoute,
@@ -187,3 +208,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
