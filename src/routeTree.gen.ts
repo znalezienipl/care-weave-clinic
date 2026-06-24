@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZespolRouteImport } from './routes/zespol'
 import { Route as UslugiRouteImport } from './routes/uslugi'
 import { Route as UmowWizyteRouteImport } from './routes/umow-wizyte'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as CennikRouteImport } from './routes/cennik'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,6 +30,11 @@ const UslugiRoute = UslugiRouteImport.update({
 const UmowWizyteRoute = UmowWizyteRouteImport.update({
   id: '/umow-wizyte',
   path: '/umow-wizyte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
   '/kontakt': typeof KontaktRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
   '/uslugi': typeof UslugiRoute
   '/zespol': typeof ZespolRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
   '/kontakt': typeof KontaktRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
   '/uslugi': typeof UslugiRoute
   '/zespol': typeof ZespolRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cennik': typeof CennikRoute
   '/kontakt': typeof KontaktRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/umow-wizyte': typeof UmowWizyteRoute
   '/uslugi': typeof UslugiRoute
   '/zespol': typeof ZespolRoute
@@ -78,16 +87,25 @@ export interface FileRouteTypes {
     | '/'
     | '/cennik'
     | '/kontakt'
+    | '/sitemap.xml'
     | '/umow-wizyte'
     | '/uslugi'
     | '/zespol'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cennik' | '/kontakt' | '/umow-wizyte' | '/uslugi' | '/zespol'
+  to:
+    | '/'
+    | '/cennik'
+    | '/kontakt'
+    | '/sitemap.xml'
+    | '/umow-wizyte'
+    | '/uslugi'
+    | '/zespol'
   id:
     | '__root__'
     | '/'
     | '/cennik'
     | '/kontakt'
+    | '/sitemap.xml'
     | '/umow-wizyte'
     | '/uslugi'
     | '/zespol'
@@ -97,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CennikRoute: typeof CennikRoute
   KontaktRoute: typeof KontaktRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UmowWizyteRoute: typeof UmowWizyteRoute
   UslugiRoute: typeof UslugiRoute
   ZespolRoute: typeof ZespolRoute
@@ -123,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/umow-wizyte'
       fullPath: '/umow-wizyte'
       preLoaderRoute: typeof UmowWizyteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -153,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CennikRoute: CennikRoute,
   KontaktRoute: KontaktRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UmowWizyteRoute: UmowWizyteRoute,
   UslugiRoute: UslugiRoute,
   ZespolRoute: ZespolRoute,
