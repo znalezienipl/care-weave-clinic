@@ -105,7 +105,7 @@ export function BookingWizard({ doctors, locations, services, doctorLocations, i
           patientEmail: patient.email || undefined,
         },
       }),
-    onSuccess: (r) => setConfirmedId(r.id),
+    onSuccess: (r: { id: string }) => setConfirmedId(r.id),
   });
 
   const canNext = () => {
@@ -321,7 +321,7 @@ export function BookingWizard({ doctors, locations, services, doctorLocations, i
                 </p>
               ) : (
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
-                  {slotsQuery.data!.slots.map((iso) => (
+                  {(slotsQuery.data!.slots as string[]).map((iso: string) => (
                     <button
                       key={iso}
                       type="button"
